@@ -28,6 +28,8 @@ class HeimaRocketmqApplicationTests {
 
     @Autowired
     private MsgProducer msgProducer;
+    @Autowired
+    private TransactionProducer transactionProducer;
 
     /**
      * 发送同步消息
@@ -39,6 +41,21 @@ class HeimaRocketmqApplicationTests {
             SendResult send = msgProducer.getProducer().send(message);
             log.info("同步发送状态 {}", send);
         }
+    }
+
+    /**
+     * 发送事务消息
+     */
+    @Test
+    void sendTransactionMsg() throws InterruptedException, MQClientException {
+        Message message1 = new Message("test-topic", "TAG-A", ("tranMsg " + 1).getBytes(StandardCharsets.UTF_8));
+        Message message2 = new Message("test-topic", "TAG-B", ("tranMsg " + 2).getBytes(StandardCharsets.UTF_8));
+        Message message3 = new Message("test-topic", "TAG-C", ("tranMsg " + 3).getBytes(StandardCharsets.UTF_8));
+        transactionProducer.getProducer().sendMessageInTransaction(message1, null);
+        transactionProducer.getProducer().sendMessageInTransaction(message2, null);
+        transactionProducer.getProducer().sendMessageInTransaction(message3, null);
+        log.info("发送事务消息完成");
+        TimeUnit.MINUTES.sleep(1);
     }
 
     /**
