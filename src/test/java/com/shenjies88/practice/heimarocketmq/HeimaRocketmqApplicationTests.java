@@ -75,6 +75,26 @@ class HeimaRocketmqApplicationTests {
     }
 
     /**
+     * 发送批量消息
+     */
+    @Test
+    void senBatchMsg() throws RemotingException, InterruptedException, MQClientException, MQBrokerException {
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 1).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 2).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 3).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 4).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 5).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 6).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 7).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 8).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 9).getBytes(StandardCharsets.UTF_8)));
+        messageList.add(new Message("test-topic", "batch", ("batchMsg " + 10).getBytes(StandardCharsets.UTF_8)));
+        SendResult send = msgProducer.getProducer().send(messageList);
+        log.info("发送批量消息 {}", send);
+    }
+
+    /**
      * 发送延时消息
      */
     @Test
