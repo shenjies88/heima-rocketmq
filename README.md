@@ -37,3 +37,10 @@ sh bin/mqshutdown namesrv
 - 设置`broker`的`brokerIP`
 - 从节点和主节点在同一台服务器，需要设置不同的`sotre`路径
 - 查看集群注册状态 `sh bin/mqadmin clusterList -n ${namesvr ip:port}`分号分隔
+
+# 消费者
+
+## 消费模式
+
+默认负载均衡
+
